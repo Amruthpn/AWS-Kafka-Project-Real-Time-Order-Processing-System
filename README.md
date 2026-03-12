@@ -1,35 +1,64 @@
-Goal
+# Solace → Kafka Streaming Pipeline
 
-Build a real-time event streaming system where an application sends orders, Kafka processes them, and AWS services store and monitor the data.
+This project demonstrates real-time event streaming using:
 
-Architecture
+- Solace PubSub+
+- Apache Kafka
+- Python Integration Service
+- Flask Dashboard
+- Kafdrop Monitoring
+- Docker
+- AWS EC2
 
-User → Producer App → Kafka → Consumer → AWS Database
+## Architecture
 
-Components:
+Event Producer  
+→ Solace Broker  
+→ Python Integration Service  
+→ Kafka Broker  
+→ Kafka Consumer  
+→ Flask Dashboard  
 
-AWS EC2 → host Kafka broker
+## Components
 
-Kafka Producer → send events (orders)
+Solace Broker (Docker)
+Kafka Broker (AWS EC2)
+Python Bridge Service
+Flask Dashboard
+Kafdrop Monitoring UI
 
-Kafka Topic → stream messages
+## Technologies
 
-Kafka Consumer → process events
+Python  
+Solace PubSub+  
+Apache Kafka  
+Docker  
+AWS EC2  
+Flask  
 
-AWS RDS / DynamoDB → store processed data
+## Features
 
-CloudWatch → monitoring
+- Event-driven architecture
+- Real-time message streaming
+- Solace to Kafka integration
+- Kafka topic monitoring using Kafdrop
+- Live dashboard using Flask
 
-Tools Used
+## Running the Project
 
-AWS EC2
+Start Solace:
 
-Apache Kafka
+docker run -d --name solace -p 8080:8080 -p 55555:55555 -p 8008:8008 -e username_admin_globalaccesslevel=admin -e username_admin_password=admin --shm-size=1g solace/solace-pubsub-standard
 
-Python
+Start Kafka:
 
-Docker (optional)
+bin/zookeeper-server-start.sh config/zookeeper.properties  
+bin/kafka-server-start.sh config/server.properties
 
-AWS RDS or DynamoDB
+Run bridge:
 
-CloudWatch
+python solace_kafka_bridge.py
+
+Run dashboard:
+
+python app.py
